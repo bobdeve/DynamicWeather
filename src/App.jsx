@@ -13,32 +13,88 @@ function App() {
 
   const API_KEY = "32bf7a4c08453d3c1027b4b1c8656552";
 
+  // useEffect(() => {
+  //   if ("geolocation" in navigator) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       function (position) {
+  //         const latitude = position.coords.latitude;
+  //         const longitude = position.coords.longitude;
+  //         setLatLong((prevValue) => ({
+  //           ...prevValue,
+  //           latitude: latitude,
+  //           longitude: longitude,
+  //         }));
+  //       },
+  //       function (error) {
+  //         console.error("Error getting geolocation: ", error);
+  //         alert("Geolocation error: " + error.message);
+  //       },
+  //       {
+  //         enableHighAccuracy: true,
+  //         timeout: 10000,
+  //         maximumAge: 0,
+  //       }
+  //     );
+  //   } else {
+  //     alert("Geolocation is not available in this browser");
+  //   }
+  // }, []);
+   
   useEffect(() => {
     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          setLatLong((prevValue) => ({
-            ...prevValue,
-            latitude: latitude,
-            longitude: longitude,
-          }));
-        },
-        function (error) {
-          console.error("Error getting geolocation: ", error);
-          alert("Geolocation error: " + error.message);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        if (result.state === 'granted') {
+          // Geolocation permission already granted, proceed with getCurrentPosition
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+              setLatLong({ latitude, longitude });
+            },
+            function (error) {
+              console.error("Error getting geolocation: ", error);
+              alert("Geolocation error: " + error.message);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 0,
+            }
+          );
+        } else if (result.state === 'prompt') {
+          // Geolocation permission not yet granted, but prompt can be shown
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+              setLatLong({ latitude, longitude });
+            },
+            function (error) {
+              console.error("Error getting geolocation: ", error);
+              alert("Geolocation error: " + error.message);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 0,
+            }
+          );
+        } else {
+          // Geolocation permission denied or unavailable
+          alert("Geolocation permission denied or unavailable");
         }
-      );
+      });
     } else {
-      alert("Geolocation is not available in this browser");
+      // Geolocation API not supported
+      alert("Geolocation is not supported in this browser");
     }
   }, []);
+  
+
+
+
+
+
 
   useEffect(() => {
     if (latLong.latitude !== "" && latLong.longitude !== "") {
