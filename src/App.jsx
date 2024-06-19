@@ -12,34 +12,8 @@ function App() {
   const [weather, setWeather] = useState(null);
 
   const API_KEY = "32bf7a4c08453d3c1027b4b1c8656552";
+  const DEFAULT_CITY = "Addis Ababa"; // Default city name to use if geolocation is denied
 
-  // useEffect(() => {
-  //   if ("geolocation" in navigator) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       function (position) {
-  //         const latitude = position.coords.latitude;
-  //         const longitude = position.coords.longitude;
-  //         setLatLong((prevValue) => ({
-  //           ...prevValue,
-  //           latitude: latitude,
-  //           longitude: longitude,
-  //         }));
-  //       },
-  //       function (error) {
-  //         console.error("Error getting geolocation: ", error);
-  //         alert("Geolocation error: " + error.message);
-  //       },
-  //       {
-  //         enableHighAccuracy: true,
-  //         timeout: 10000,
-  //         maximumAge: 0,
-  //       }
-  //     );
-  //   } else {
-  //     alert("Geolocation is not available in this browser");
-  //   }
-  // }, []);
-   
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.permissions.query({ name: 'geolocation' }).then((result) => {
@@ -54,6 +28,7 @@ function App() {
             function (error) {
               console.error("Error getting geolocation: ", error);
               alert("Geolocation error: " + error.message);
+              setDefaultCityWeather();
             },
             {
               enableHighAccuracy: true,
@@ -72,6 +47,7 @@ function App() {
             function (error) {
               console.error("Error getting geolocation: ", error);
               alert("Geolocation error: " + error.message);
+              setDefaultCityWeather();
             },
             {
               enableHighAccuracy: true,
@@ -80,21 +56,17 @@ function App() {
             }
           );
         } else {
-          // Geolocation permission denied or unavailable
+          // Geolocation permission denied or unavailable, set default city weather
           alert("Geolocation permission denied or unavailable");
+          setDefaultCityWeather();
         }
       });
     } else {
-      // Geolocation API not supported
+      // Geolocation API not supported, set default city weather
       alert("Geolocation is not supported in this browser");
+      setDefaultCityWeather();
     }
   }, []);
-  
-
-
-
-
-
 
   useEffect(() => {
     if (latLong.latitude !== "" && latLong.longitude !== "") {
@@ -120,6 +92,11 @@ function App() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const setDefaultCityWeather = () => {
+    setCity(DEFAULT_CITY);
+    getWeather(DEFAULT_CITY);
   };
 
   const handleWeather = (e) => {
