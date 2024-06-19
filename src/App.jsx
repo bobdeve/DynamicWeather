@@ -16,55 +16,30 @@ function App() {
 
   useEffect(() => {
     if ("geolocation" in navigator) {
-      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-        if (result.state === 'granted') {
-          // Geolocation permission already granted, proceed with getCurrentPosition
-          navigator.geolocation.getCurrentPosition(
-            function (position) {
-              const latitude = position.coords.latitude;
-              const longitude = position.coords.longitude;
-              setLatLong({ latitude, longitude });
-            },
-            function (error) {
-              console.error("Error getting geolocation: ", error);
-              alert("Geolocation error: " + error.message);
-              setDefaultCityWeather();
-            },
-            {
-              enableHighAccuracy: true,
-              timeout: 10000,
-              maximumAge: 0,
-            }
-          );
-        } else if (result.state === 'prompt') {
-          // Geolocation permission not yet granted, but prompt can be shown
-          navigator.geolocation.getCurrentPosition(
-            function (position) {
-              const latitude = position.coords.latitude;
-              const longitude = position.coords.longitude;
-              setLatLong({ latitude, longitude });
-            },
-            function (error) {
-              console.error("Error getting geolocation: ", error);
-              alert("Geolocation error: " + error.message);
-              setDefaultCityWeather();
-            },
-            {
-              enableHighAccuracy: true,
-              timeout: 10000,
-              maximumAge: 0,
-            }
-          );
-        } else {
-          // Geolocation permission denied or unavailable, set default city weather
-          alert("Geolocation permission denied or unavailable");
-          setDefaultCityWeather();
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          setLatLong({ latitude, longitude });
+        },
+        function (error) {
+          console.error("Error getting geolocation: ", error);
+          alert("Geolocation error: " + error.message);
+          // If geolocation fails, set default city
+          setCity(DEFAULT_CITY);
+          getWeather(DEFAULT_CITY);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
         }
-      });
+      );
     } else {
-      // Geolocation API not supported, set default city weather
       alert("Geolocation is not supported in this browser");
-      setDefaultCityWeather();
+      // If geolocation is not supported, set default city
+      setCity(DEFAULT_CITY);
+      getWeather(DEFAULT_CITY);
     }
   }, []);
 
@@ -92,11 +67,6 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const setDefaultCityWeather = () => {
-    setCity(DEFAULT_CITY);
-    getWeather(DEFAULT_CITY);
   };
 
   const handleWeather = (e) => {
