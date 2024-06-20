@@ -6,7 +6,7 @@ import { CityWeather } from "./CityWeather";
 
 function App() {
   const [error, setError] = useState(null);
-  const [city, setCity] = useState("awasa");
+  const [city, setCity] = useState("");
   const [loading, setLoading] = useState(true);
   const [latLong, setLatLong] = useState({ latitude: "", longitude: "" });
   const [weather, setWeather] = useState(null);
@@ -39,7 +39,7 @@ function App() {
       alert("Geolocation is not supported in this browser");
       // If geolocation is not supported, set default city
       setCity(DEFAULT_CITY);
-      getWeather('awassa');
+      getWeather('');
     }
   }, []);
 
