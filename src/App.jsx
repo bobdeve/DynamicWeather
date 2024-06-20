@@ -6,7 +6,7 @@ import { CityWeather } from "./CityWeather";
 
 function App() {
   const [error, setError] = useState(null);
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("Addis Ababa");
   const [loading, setLoading] = useState(true);
   const [latLong, setLatLong] = useState({ latitude: "", longitude: "" });
   const [weather, setWeather] = useState(null);
