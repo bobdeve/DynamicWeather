@@ -39,13 +39,16 @@ function App() {
       alert("Geolocation is not supported in this browser");
       // If geolocation is not supported, set default city
       setCity(DEFAULT_CITY);
-      getWeather('');
+      getWeather('Addis Ababa');
     }
   }, []);
 
   useEffect(() => {
     if (latLong.latitude !== "" && latLong.longitude !== "") {
       getWeather("current");
+    }
+    else {
+      getWeather('Addis Ababa')
     }
   }, [latLong]);
 
