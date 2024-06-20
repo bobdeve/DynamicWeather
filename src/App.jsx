@@ -18,15 +18,15 @@ function App() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         function (position) {
-          const latitudes = position.coords.latitude;
-          const longitudes = position.coords.longitude;
-          setLatLong({...prvValues, latitude: latitudes, longitude: longitudes})
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          setLatLong({ latitude, longitude });
         },
         function (error) {
           console.error("Error getting geolocation: ", error);
           alert("Geolocation error: " + error.message);
           // If geolocation fails, set default city
-          setCity(prvValue => DEFAULT_CITY);
+          setCity(DEFAULT_CITY);
           getWeather(DEFAULT_CITY);
         },
         {
@@ -38,22 +38,16 @@ function App() {
     } else {
       alert("Geolocation is not supported in this browser");
       // If geolocation is not supported, set default city
-      setCity(prvValue => DEFAULT_CITY);
-      getWeather(DEFAULT_CITY);
+      setCity(DEFAULT_CITY);
+      getWeather('');
     }
   }, []);
 
   useEffect(() => {
     if (latLong.latitude !== "" && latLong.longitude !== "") {
-      const timeOut = setTimeout(() => {
-        getWeather("current");
-      }, 2000);
-      clearTimeout(timeOut)
+      getWeather("current");
     }
-  
-
-  },[latLong])
-   
+  }, [latLong]);
 
   const getWeather = async (values) => {
     try {
