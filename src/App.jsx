@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-import { Spin } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+
 import {
   Ring,
   Roller,
@@ -14,7 +15,7 @@ import {
 
 import "./App.css";
 import { CityWeather } from "./CityWeather";
-import Ribbon from "antd/es/badge/Ribbon";
+
 import { ForcastDisplay } from "./ForcastDisplay";
 import LineChartComponent from "./LineChartComponent";
 
@@ -159,7 +160,7 @@ function App() {
 
  
 
-  return ( <h1>
+  return ( <>
     <div className={mainid}>
       <form action="">
         <input
@@ -177,7 +178,7 @@ function App() {
 
      
      </div> 
-  </h1> );
+  </> );
 }
 
 export default App;

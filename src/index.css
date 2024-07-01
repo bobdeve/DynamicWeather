@@ -16,9 +16,10 @@ body {
   text-align: center;
   background-size: cover;
   background-repeat: no-repeat;
+  
 }
 
-.main-container.sunny {
+.main-container.rain {
   background-image: url("https://imagizer.imageshack.com/img924/1171/IkiDjf.jpg");
 }
 
@@ -47,7 +48,7 @@ input {
   max-width: 800px; /* Limit maximum width */
   height: 50px;
   border-radius: 40px;
-  border: 2px solid purple;
+  border: 2px solid aqua;
   padding: 0 1rem;
   font-size: 1rem; /* Adjust font size */
 }
@@ -97,6 +98,7 @@ button {
 }
 .wea-text{
   color: #273362;
+  font-size: 2.5rem;
 }
 .main-container-sub {
   display: flex;
@@ -153,6 +155,83 @@ button {
   background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent overlay */
   z-index: 9999; /* Ensure spinner is on top of other content */
 }
+.forcast-container{
+  margin-top: 3rem;
+  height: 20rem;
+  width: auto;
+  background-color: #fff;
+  display: flex;
+  gap: 1rem;
+}
+.forcast-items{
+  
+  background-color: #273362;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: auto;
+  height: 18rem;
+  margin: auto 1rem;
+  padding:  1rem;
+  border-radius: 20px;
+}
+.for-dispaly{
+  display: flex;
+  gap: 1.4rem;
+  justify-content: center;
+  align-items: center;
+}
+.display-forc-info{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+}
+.display-main-icon{
+  font-size: 50px;
+}
+
+.display-forc-info > h3{
+  font-size: 20px;
+}
+.display-forc-info > h4{
+  font-size: 15px;
+}
+.forc-disc-container{
+  border: 1px solid #fff;
+  padding: 0.5rem;
+  margin-top: 2rem;
+  border-radius: 20px;
+
+}
+.forc-disc{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  
+}
+.forc-disc > p{
+  font-size: 15px;
+}
+
+.lineChar-container{
+  background-color: rgba(255, 255, 255, 0.2); /* semi-transparent background */
+  backdrop-filter: blur(10px); /* blur effect */
+  -webkit-backdrop-filter: blur(10px); /* for Safari support */
+  border-radius: 10px; /* rounded corners */
+  padding: 20px; /* some padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* optional: adds a slight shadow for better visibility */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 3rem auto;
+  padding: 1rem auto;
+  color: #273362;
+}
+.line-chart{
+  background-color: #fff;
+}
+
 /* Media Queries for Responsive Design */
 @media screen and (max-width: 1200px) {
   .main-container {
@@ -199,7 +278,11 @@ button {
       width: 90%;
       max-width: 100%;
   }
-}
+  .city-text,.wea-text{
+      font-size: 2rem;
+  }
+} 
+
 
 @media screen and (max-width: 480px) {
   .main-container {
@@ -218,5 +301,46 @@ button {
   .small-icons {
       width: 2.5rem;
       height: 2.5rem;
+  }
+}
+
+/* styles.css */
+.lineChart-container {
+  height: 800px; /* Default height for larger screens */
+  width: 100px; /* Default height for larger screens */
+  background-color: red;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .lineChart-container {
+    height: 300px; /* Adjust height for smaller screens */
+  }
+
+  .recharts-x-axis .recharts-cartesian-axis-tick-value {
+    font-size: 12px !important; /* Smaller font size for X-axis labels */
+    fill: #4a4a4a; /* Same color as before */
+  }
+
+  .recharts-y-axis .recharts-cartesian-axis-tick-value {
+    font-size: 12px !important; /* Smaller font size for Y-axis labels */
+    fill: #4a4a4a; /* Same color as before */
+  }
+}
+
+/* Media query for very small screens */
+@media (max-width: 480px) {
+  .lineChart-container {
+    height: 200px; /* Further adjust height for very small screens */
+  }
+
+  .recharts-x-axis .recharts-cartesian-axis-tick-value {
+    font-size: 10px !important; /* Even smaller font size for X-axis labels */
+    fill: #4a4a4a; /* Same color as before */
+  }
+
+  .recharts-y-axis .recharts-cartesian-axis-tick-value {
+    font-size: 10px !important; /* Even smaller font size for Y-axis labels */
+    fill: #4a4a4a; /* Same color as before */
   }
 }
