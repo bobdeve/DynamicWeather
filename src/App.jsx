@@ -76,7 +76,7 @@ function App() {
     e.preventDefault();
     if (city.trim() !== "") {
       setLoading(true);
-      getWeather(city);
+      getWeather("");
       setCity("");
     }
   };
