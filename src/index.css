@@ -175,6 +175,7 @@ button {
   padding:  1rem;
   border-radius: 20px;
 }
+
 .for-dispaly{
   display: flex;
   gap: 1.4rem;
@@ -214,6 +215,18 @@ button {
 }
 .forc-disc > p{
   font-size: 15px;
+}
+.title{
+  background-color: rgba(255, 255, 255, 0.2); /* semi-transparent background */
+  backdrop-filter: blur(10px); /* blur effect */
+  -webkit-backdrop-filter: blur(10px); /* for Safari support */
+  border-radius: 10px; /* rounded corners */
+  padding: 20px; /* some padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  padding: 2rem;
+  width: 50%;
+  color:#273362 ;
+  margin: 2rem auto;
 }
 
 .lineChar-container{

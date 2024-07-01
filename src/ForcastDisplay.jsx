@@ -41,42 +41,50 @@ export const ForcastDisplay = ({ weatherData }) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("en-US", options);
   }
+  
+ const displayForcast =()=>{
   let days = weatherData.dateInfo;
+  return days.map((day, index) => {
+    let icons = faSun;
+    if (weatherData?.weatherInfo[index] === "Rain, Overcast" || weatherData?.weatherInfo[index] === "Rain, Partially cloudy") {
+      icons = faCloudRain;
+    }
+    if (weatherData?.weatherInfo[index] === "snow") {
+      icons = faSnowflake;
+    }
+    if (weatherData?.weatherInfo[index] === "Overcast" || weatherData?.weatherInfo[index]  === "Partially cloudy"){
+      icons = faCloud;
+    }
+    return (
+      <div className="forcast-items" key={index}>
+        <div className="for-dispaly">
+        <FontAwesomeIcon className="display-main-icon" icon={icons} />
+        <div className="display-forc-info">
+        <h3>{formatDate(weatherData.dateInfo[index])}</h3>
+        <h4>{weatherData.weatherInfo[index]}</h4>
+        </div>
+       
 
+        </div>
+        <div className="forc-disc-container">
+        <div className="forc-disc"><RiBlazeFill/> <p> UV Index: {weatherData.uvIndex[index]}</p></div>
+        <div className="forc-disc"> <RiWaterPercentFill/>  <p> Humidity: {weatherData.humidity[index]}</p></div>
+        <div className="forc-disc"><RiTempHotFill/><p> Temp: {((weatherData.tempMax[index]-30)/2).toFixed(2)} <sup style={{ fontSize: "smaller" }}>C</sup></p></div>
+        </div>
+      
+        
+      </div>
+    );
+  })
+  
+ }
   return (
+    <>
+     <h1 className="title">15 day forecast</h1>
     <Carousel className="forcast-container" responsive={responsive}>
-      {days.map((day, index) => {
-        let icons = faSun;
-        if (weatherData?.weatherInfo[index] === "Rain, Overcast" || weatherData?.weatherInfo[index] === "Rain, Partially cloudy") {
-          icons = faCloudRain;
-        }
-        if (weatherData?.weatherInfo[index] === "snow") {
-          icons = faSnowflake;
-        }
-        if (weatherData?.weatherInfo[index] === "Overcast" || weatherData?.weatherInfo[index]  === "Partially cloudy"){
-          icons = faCloud;
-        }
-        return (
-          <div className="forcast-items" key={index}>
-            <div className="for-dispaly">
-            <FontAwesomeIcon className="display-main-icon" icon={icons} />
-            <div className="display-forc-info">
-            <h3>{formatDate(weatherData.dateInfo[index])}</h3>
-            <h4>{weatherData.weatherInfo[index]}</h4>
-            </div>
-           
-
-            </div>
-            <div className="forc-disc-container">
-            <div className="forc-disc"><RiBlazeFill/> <p> UV Index: {weatherData.uvIndex[index]}</p></div>
-            <div className="forc-disc"> <RiWaterPercentFill/>  <p> Humidity: {weatherData.humidity[index]}</p></div>
-            <div className="forc-disc"><RiTempHotFill/><p> Temp: {((weatherData.tempMax[index]-30)/2).toFixed(2)} <sup style={{ fontSize: "smaller" }}>C</sup></p></div>
-            </div>
-          
-            
-          </div>
-        );
-      })}
+     
+      {displayForcast()}
     </Carousel>
+    </>
   );
 };

@@ -22,6 +22,9 @@ const LineChartComponent = ({ datas }) => {
      fontSize=14
   }
   return (
+    <>
+    <h1 className="title">Line chart showing relation of temperature and humidity</h1>
+   
     <ResponsiveContainer
       className="lineChar-container"
       width="100%"
@@ -58,6 +61,7 @@ const LineChartComponent = ({ datas }) => {
        
       </LineChart>
     </ResponsiveContainer>
+    </>
   );
 };
 
