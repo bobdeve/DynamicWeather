@@ -1,126 +1,183 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Roller } from "react-awesome-spinners";
+
+import { Spin } from "antd";
+import {
+  Ring,
+  Roller,
+  DualRing,
+  Circle,
+  Heart,
+  Ripple,
+  Default,
+} from "react-awesome-spinners";
+
 import "./App.css";
 import { CityWeather } from "./CityWeather";
+import Ribbon from "antd/es/badge/Ribbon";
+import { ForcastDisplay } from "./ForcastDisplay";
+import LineChartComponent from "./LineChartComponent";
 
 function App() {
-  const [error, setError] = useState(null);
-  const [city, setCity] = useState("Addis Ababa");
+
+  const [city, setCity] = useState("");
   const [loading, setLoading] = useState(true);
-  const [latLong, setLatLong] = useState({ latitude: "", longitude: "" });
-  const [weather, setWeather] = useState(null);
 
-  const API_KEY = "32bf7a4c08453d3c1027b4b1c8656552";
-  const DEFAULT_CITY = "Addis Ababa"; // Default city name to use if geolocation is denied
+  const [latLong, setLatLong] = useState({
+    latitude: "",
+    longitude: "",
+  });
 
+  const [location, setLocation] = useState(null);
+  const [errorlocation, setErrorLocation] = useState(null);
+
+  const [weather, setWeather] = useState("");
+  const [error, setError] = useState(null);
+
+
+  const API_KEY2 = "4AMBKRR7CLG37JRVP5YS578E7";
+ 
   useEffect(() => {
-    if ("geolocation" in navigator) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          setLatLong({ latitude, longitude });
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
         },
-        function (error) {
-          console.error("Error getting geolocation: ", error);
-          alert("Geolocation error: " + error.message);
-          // If geolocation fails, set default city
-          setCity(DEFAULT_CITY);
-          getWeather(DEFAULT_CITY);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
+        (error) => {
+          setErrorLocation('Error getting location: ' + error.message);
+          console.error('Error getting location:', error);
         }
       );
     } else {
-      alert("Geolocation is not supported in this browser");
-      // If geolocation is not supported, set default city
-      setCity(DEFAULT_CITY);
-      getWeather('Addis Ababa');
+      setErrorLocation('Geolocation is not supported by your browser.');
+      console.error('Geolocation is not supported.');
     }
   }, []);
 
-  useEffect(() => {
-    if (latLong.latitude !== "" && latLong.longitude !== "") {
-      getWeather("current");
-    }
-    else {
-      getWeather('Addis Ababa')
-    }
-  }, [latLong]);
+
 
   const getWeather = async (values) => {
+    console.log("getWeather" + values)
     try {
-      setError(null);
+      setError("");
       let url = "";
-      if (values === "current") {
-        url = `https://api.openweathermap.org/data/2.5/weather?lat=${latLong.latitude}&lon=${latLong.longitude}&appid=${API_KEY}&units=metric`;
-      } else {
-        url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+     
+      if (values === "current" && city ==="" && location !== null ) {
+        console.log("using lat and long" )
+        url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location.lat},${location.lng}?unitGroup=us&key=${API_KEY2}`;
+            
+         console.log(url)
+  
+      } else  {
+        console.log("using user city name")
+        url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=${API_KEY2}`;
+        setLatLong({})
+       
       }
+
       const response = await axios.get(url);
-      setWeather(response.data);
+      setWeather(response);
     } catch (error) {
-      console.error("Error fetching weather data: ", error);
-      setError("Error fetching weather data");
+      setError("Error fetching the weather data");
       setWeather(null);
-    } finally {
-      setLoading(false);
     }
   };
-
   const handleWeather = (e) => {
     e.preventDefault();
-    if (city.trim() !== "") {
-      setLoading(true);
-      getWeather("");
-      setCity("");
-    }
+    getWeather();
+    setCity("");
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   };
-
   const handleError = () => {
     if (loading) {
       return (
         <div className="spinner-overlay">
           <Roller size="180px" color="#3B5998" />
+          
         </div>
       );
     } else {
-      return <h1>No data, check your spelling or your Internet connection</h1>;
+      return <h1>No data, check your spelling or you Internet connection</h1>;
     }
   };
+  useEffect(() => {
+    console.log("use effect triggered ")
+    if (location !== null){
+     
+        getWeather("current");
+       console.log("use effect inside triggered")
 
-  const hadWeatherData = weather !== null;
+    }
+   
+  }, [location]);
+   
 
-  let mainClassName = "main-container";
-  if (weather && weather.weather[0].main === "Rain") {
-    mainClassName += " sunny";
-  } else if (weather && weather.weather[0].main === "Clouds") {
-    mainClassName += " clouds";
-  } else if (weather && weather.weather[0].main === "Clear") {
-    mainClassName += " clear";
+  let hadWeatherData = weather !== null && weather !== "";
+
+  // console.log(weather?.data?.days[0]?.icon);
+  console.log(weather?.data?.days[0]?.icon);
+  console.log(location);
+  // console.log(city);
+  // console.log(error);
+ 
+  let mainid = "main-container";
+  if (weather && weather?.data?.days[0]?.conditions === "Clear") {
+  
+    mainid += " clear";
+  }
+  if (weather && weather?.data?.days[0]?.conditions === "Rain, Overcast"  || weather?.data?.days[0]?.conditions === "Rain, Partially cloudy" ) {
+    mainid += " rain";
+    
+  }
+  if (weather && weather?.data?.days[0]?.conditions === "Overcast"  || weather?.data?.days[0]?.conditions === "Partially cloudy" ) {
+    mainid += " clouds";
+   
+  }
+ 
+
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = {  month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
   }
 
-  return (
-    <div className={mainClassName}>
-      <form onSubmit={handleWeather}>
+  const datas = [
+    { name: formatDate (weather?.data?.days[0]?.datetime), uv: weather?.data?.days[0]?.uvindex, tempmax: weather?.data?.days[0]?.tempmax, hum: weather?.data?.days[0]?.humidity },
+    { name: formatDate (weather?.data?.days[1]?.datetime), uv: weather?.data?.days[1]?.uvindex, tempmax: weather?.data?.days[1]?.tempmax, hum: weather?.data?.days[1]?.humidity },
+    { name: formatDate (weather?.data?.days[2]?.datetime), uv: weather?.data?.days[2]?.uvindex, tempmax: weather?.data?.days[2]?.tempmax, hum: weather?.data?.days[2]?.humidity },
+    { name: formatDate (weather?.data?.days[3]?.datetime), uv: weather?.data?.days[3]?.uvindex, tempmax: weather?.data?.days[3]?.tempmax, hum: weather?.data?.days[3]?.humidity },
+    { name: formatDate (weather?.data?.days[4]?.datetime), uv: weather?.data?.days[4]?.uvindex, tempmax: weather?.data?.days[4]?.tempmax, hum: weather?.data?.days[4]?.humidity },
+    { name: formatDate (weather?.data?.days[5]?.datetime), uv: weather?.data?.days[5]?.uvindex, tempmax: weather?.data?.days[5]?.tempmax, hum: weather?.data?.days[5]?.humidity },
+    { name: formatDate (weather?.data?.days[6]?.datetime), uv: weather?.data?.days[6]?.uvindex, tempmax: weather?.data?.days[6]?.tempmax, hum: weather?.data?.days[6]?.humidity },
+  ];
+
+
+ 
+
+  return ( <h1>
+    <div className={mainid}>
+      <form action="">
         <input
-          type="text"
-          placeholder="Enter city name"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
+      placeholder="Enter city name"
+           type="text"
+           value={city}
+           onChange={(e) => setCity(e.target.value)}
         />
-        <button type="submit" disabled={loading}>
-          Get Weather Data
-        </button>
+        <button  disabled={city ===""} onClick={(e) => handleWeather(e)}>Get Weather Data</button>
       </form>
 
-      {hadWeatherData ? <CityWeather weather={weather} /> : handleError()}
-    </div>
-  );
+     {hadWeatherData ? <CityWeather weather={weather} /> : handleError()}
+
+     {hadWeatherData ? <LineChartComponent datas={datas} /> : handleError()}
+
+     
+     </div> 
+  </h1> );
 }
 
 export default App;
