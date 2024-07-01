@@ -1,0 +1,346 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding and border are included in element's total width and height */
+}
+
+body {
+    font-family: Arial, sans-serif; /* Example font family */
+    color: #273362;
+}
+
+.main-container {
+    background-image: url("https://imagizer.imageshack.com/img924/1171/IkiDjf.jpg");
+    padding: 2rem 6rem;
+    color: wheat;
+    text-align: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.main-container.rain {
+    background-image: url("https://imagizer.imageshack.com/img924/1171/IkiDjf.jpg");
+}
+
+.main-container.clouds {
+    background-image: url("https://imagizer.imageshack.com/img922/5733/OxQwJ7.jpg");
+}
+
+.main-container.windy {
+    background-image: url("https://imagizer.imageshack.com/img922/7084/n7cK8W.jpg");
+}
+
+.main-container.clear {
+    background-image: url("https://imagizer.imageshack.com/img924/1387/ffEtBY.jpg");
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+input {
+    width: 80%; /* Adjust width for smaller screens */
+    max-width: 800px; /* Limit maximum width */
+    height: 50px;
+    border-radius: 40px;
+    border: 2px solid aqua;
+    padding: 0 1rem;
+    font-size: 1rem; /* Adjust font size */
+}
+
+button {
+    border: none;
+    border-radius: 25px;
+    background-color: rgb(218, 230, 230);
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    font-size: 1rem; /* Adjust font size */
+}
+
+.spinner {
+    display: block;
+    background-color: red;
+    /* Add styles for spinner as needed */
+}
+
+.main-containers {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    color: #fff;
+    background: rgba(71, 190, 241, 0.2);
+    backdrop-filter: blur(50px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+    text-align: center;
+}
+
+.weather-icon {
+    font-size: 10rem; /* Adjust font size for smaller screens */
+    color: #FEE05C;
+}
+.temp-text,.today-text{
+    color: #273362;
+    font-size: 1rem;
+}
+.city-text{
+    font-size: 4rem;
+    color: #273362;
+    font-style: bold;
+}
+.wea-text{
+    color: #273362;
+    font-size: 2.5rem;
+}
+.main-container-sub {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+   
+}
+
+.main-container-sub-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+    background-color: #fff;
+    padding: 2rem 3rem;
+    border-radius: 35px;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
+    justify-content: center;
+    
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.weather-disc, .wind-speed, .humidity, .sea-level {
+    flex: 1; /* Ensure equal width for detail containers */
+    background-color: #fff;
+     color: #273362;
+    border-radius: 25px;
+    padding: 1rem;
+    text-align: center;
+    max-width: 250px; /* Limit maximum width */
+    margin-bottom: 2rem;
+}
+
+.small-icons {
+    width: 4rem; /* Adjust size of small icons */
+    height: 4rem;
+    margin-bottom: 0.5rem;
+}
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent overlay */
+    z-index: 9999; /* Ensure spinner is on top of other content */
+  }
+  .forcast-container{
+    margin-top: 3rem;
+    height: 20rem;
+    width: auto;
+    background-color: #fff;
+    display: flex;
+    gap: 1rem;
+  }
+  .forcast-items{
+    
+    background-color: #273362;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: auto;
+    height: 18rem;
+    margin: auto 1rem;
+    padding:  1rem;
+    border-radius: 20px;
+}
+.for-dispaly{
+    display: flex;
+    gap: 1.4rem;
+    justify-content: center;
+    align-items: center;
+}
+.display-forc-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+}
+.display-main-icon{
+    font-size: 50px;
+}
+
+.display-forc-info > h3{
+    font-size: 20px;
+}
+.display-forc-info > h4{
+    font-size: 15px;
+}
+.forc-disc-container{
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    margin-top: 2rem;
+    border-radius: 20px;
+
+}
+.forc-disc{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    
+}
+.forc-disc > p{
+    font-size: 15px;
+}
+
+.lineChar-container{
+    background-color: rgba(255, 255, 255, 0.2); /* semi-transparent background */
+    backdrop-filter: blur(10px); /* blur effect */
+    -webkit-backdrop-filter: blur(10px); /* for Safari support */
+    border-radius: 10px; /* rounded corners */
+    padding: 20px; /* some padding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* optional: adds a slight shadow for better visibility */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 3rem auto;
+    padding: 1rem auto;
+    color: #273362;
+}
+.line-chart{
+    background-color: #fff;
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 1200px) {
+    .main-container {
+        padding: 5rem;
+    }
+
+    .main-container-sub {
+        gap: 1rem;
+    }
+
+    .weather-icon {
+        font-size: 6rem;
+    }
+
+    .detail-container {
+        gap: 1rem;
+        align-self: center;
+        justify-self: center;
+        padding: 0 1rem;
+        
+    }
+
+    .small-icons {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-container {
+        padding: 4rem;
+    }
+
+    .main-containers {
+        padding: 10px;
+    }
+
+    .main-container-sub {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input {
+        width: 90%;
+        max-width: 100%;
+    }
+    .city-text,.wea-text{
+        font-size: 2rem;
+    }
+} 
+
+
+@media screen and (max-width: 480px) {
+    .main-container {
+        padding: 3rem;
+    }
+
+    .weather-icon {
+        font-size: 5rem;
+    }
+
+    .detail-container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .small-icons {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+/* styles.css */
+.lineChart-container {
+    height: 800px; /* Default height for larger screens */
+    width: 100px; /* Default height for larger screens */
+    background-color: red;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .lineChart-container {
+      height: 300px; /* Adjust height for smaller screens */
+    }
+  
+    .recharts-x-axis .recharts-cartesian-axis-tick-value {
+      font-size: 12px !important; /* Smaller font size for X-axis labels */
+      fill: #4a4a4a; /* Same color as before */
+    }
+  
+    .recharts-y-axis .recharts-cartesian-axis-tick-value {
+      font-size: 12px !important; /* Smaller font size for Y-axis labels */
+      fill: #4a4a4a; /* Same color as before */
+    }
+  }
+  
+  /* Media query for very small screens */
+  @media (max-width: 480px) {
+    .lineChart-container {
+      height: 200px; /* Further adjust height for very small screens */
+    }
+  
+    .recharts-x-axis .recharts-cartesian-axis-tick-value {
+      font-size: 10px !important; /* Even smaller font size for X-axis labels */
+      fill: #4a4a4a; /* Same color as before */
+    }
+  
+    .recharts-y-axis .recharts-cartesian-axis-tick-value {
+      font-size: 10px !important; /* Even smaller font size for Y-axis labels */
+      fill: #4a4a4a; /* Same color as before */
+    }
+  }
