@@ -174,7 +174,19 @@ button {
   margin: auto 1rem;
   padding:  1rem;
   border-radius: 20px;
+  cursor: pointer;
+  
 }
+.forcast-items:hover{
+  background-color: rgb(70, 123, 228);
+  color: black;
+}
+.forcast-items.selected{
+  background-color: #5668af;
+  border: 4px solid #273362;
+}
+
+
 
 .for-dispaly{
   display: flex;
@@ -243,6 +255,15 @@ button {
 }
 .line-chart{
   background-color: #fff;
+}
+.temp-text-min{
+  display: flex;
+  justify-content: center;
+}
+.weather-disc,.wind-speed,.humidity,.sea-level{
+  border: #273362 2px solid;
+  background-color: #5668AF;
+  color: black;
 }
 
 /* Media Queries for Responsive Design */

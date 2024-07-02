@@ -14,7 +14,7 @@ import { FaBeer, FaWater } from "react-icons/fa";
 import { CurrentDisplay } from "./CurrentDisplay";
 import { ForcastDisplay } from "./ForcastDisplay";
 
-export const CityWeather = ({ weather }) => {
+export const CityWeather = ({ weather,currentIndex,setIndex }) => {
   const hasWeatherData = weather !== null;
   const visibility = (weather?.data?.days).map((day) => day.windspeed / 1000);
   const cityName = weather?.data?.resolvedAddress;
@@ -27,6 +27,15 @@ export const CityWeather = ({ weather }) => {
   const uvIndex = (weather?.data?.days).map((day) => day.uvindex);
   const tempMax = (weather?.data?.days).map((day) => day.tempmax);
   const dateInfo = (weather?.data?.days).map((day) => day.datetime);
+  const pressure = (weather?.data?.days).map((day) => day.pressure);
+  const snow = (weather?.data?.days).map((day) => day.snow);
+  const cloudcover = (weather?.data?.days).map((day) => day.cloudcover);
+  const solarradiation = (weather?.data?.days).map((day) => day.solarradiation);
+  const tempmin = (weather?.data?.days).map((day) => day.tempmin);
+  const dew = (weather?.data?.days).map((day) => day.dew);
+  const solarenergy = (weather?.data?.days).map((day) => day.solarenergy);
+  const moonphase = (weather?.data?.days).map((day) => day.moonphase);
+ 
 
   const daysOfWeek = [
     "Sunday",
@@ -71,6 +80,15 @@ export const CityWeather = ({ weather }) => {
     uvIndex,
     tempMax,
     dateInfo,
+    pressure,
+    snow,
+    cloudcover,
+    solarradiation,
+    tempmin,
+    dew,
+    solarenergy,
+    moonphase
+
   };
 
   return (
@@ -80,8 +98,9 @@ export const CityWeather = ({ weather }) => {
         mainClass={mainClass}
         weatherClass={weatherClass}
         icon={icon}
+        currentIndex={currentIndex}
       />
-      <ForcastDisplay weatherData={weatherData} />
+      <ForcastDisplay  currentIndex={currentIndex}  setIndex={setIndex} weatherData={weatherData} />
     </>
   );
 };

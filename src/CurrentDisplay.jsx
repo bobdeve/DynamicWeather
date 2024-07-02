@@ -2,19 +2,41 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSun,
-  faCloudRain,
+  faMoon,
   faWind,
   faCloud,
   faSnowflake,
-  faRuler,
+  faGauge,
   faEye,
+  faRadiation
   
 } from "@fortawesome/free-solid-svg-icons";
-import { RiHeartFill,RiBlazeFill } from '@remixicon/react'
+import { RiHeartFill,RiBlazeFill,RiTempColdFill,RiDropLine } from '@remixicon/react'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
 
-
-export const CurrentDisplay = ({weatherData,mainClass,weatherClass,icon}) => {
+export const CurrentDisplay = ({weatherData,mainClass,weatherClass,icon,currentIndex}) => {
+  console.log(currentIndex)
 
   function formatDate(dateStr) {
     const date = new Date(dateStr);
@@ -26,33 +48,34 @@ export const CurrentDisplay = ({weatherData,mainClass,weatherClass,icon}) => {
       <div className="main-container-sub">
         <FontAwesomeIcon className={weatherClass} icon={icon} />
         <div className="main-container-sub-detail">
-          <h1 className="today-text">{weatherData.currentDayName}, {formatDate((weatherData.dateInfo[0]))}</h1>
+          <h1 className="today-text">{currentIndex === 0 ? weatherData.currentDayName: null} {formatDate((weatherData.dateInfo[currentIndex]))}</h1>
           <h1 className="city-text">{(weatherData.cityName)} </h1>
           <h2 className="temp-text">
-            Temperature {`${((weatherData.tempMax[0]-30)/2).toFixed(2)}`}
+            Temperature {`${((weatherData.tempMax[currentIndex]-30)/2).toFixed(2)}`}
             <sup style={{ fontSize: "smaller" }}>C</sup>
           </h2>
           
-          <h2 className="wea-text">{weatherData.weatherInfo[0]}</h2>
+          <h2 className="wea-text">{weatherData.weatherInfo[currentIndex]}</h2>
         </div>
       </div>
       <div>
-        <div className="detail-container">
+        
+        <Carousel className="forcast-container" responsive={responsive}>
           <div className="weather-disc">
-            <h3>{(weatherData.visibility[0]).toFixed(2)}KM</h3>
+            <h3>{(weatherData.visibility[currentIndex])?.toFixed(2)}KM</h3>
             <FontAwesomeIcon className='small-icons' icon={faEye} />
             <h4>Visibility</h4>
 
           </div>
           <div className="wind-speed">
-            <h1>{weatherData.windSpeed[0]}</h1>
+            <h1>{weatherData.windSpeed[currentIndex]}</h1>
             <FontAwesomeIcon className="small-icons" icon={faWind} />
             <h4>Wind</h4>
           </div>
 
           {/* <h2>{maxtemp}</h2> */}
           <div className="humidity">
-            <h2>{weatherData.humidity[0]}</h2>
+            <h2>{weatherData.humidity[currentIndex]}</h2>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +91,7 @@ export const CurrentDisplay = ({weatherData,mainClass,weatherClass,icon}) => {
             <h4>Humidity</h4>
           </div>
           <div className="sea-level">
-              <h2>{weatherData.uvIndex[0]??`No Data found`}</h2>
+              <h2>{weatherData.uvIndex[currentIndex]??`No Data found`}</h2>
             
               <RiBlazeFill
               className='small-icons'
@@ -76,8 +99,79 @@ export const CurrentDisplay = ({weatherData,mainClass,weatherClass,icon}) => {
         />
               <h4>UV Index</h4>
           </div>
+          <div className="sea-level">
+              <h2>{weatherData.pressure[currentIndex]??`No Data found`}</h2>
+            
+              <FontAwesomeIcon
+              icon={faGauge}
+              className='small-icons'
+           // add custom class name
+        />
+              <h4>pressure</h4>
+          </div>
+          <div className="sea-level">
+             <div className="temp-text-min"> <h2>{(weatherData.tempmin[currentIndex]-30)/2??`No Data found`}</h2>
+              <sup style={{ fontSize: "smaller" }}>C</sup></div>
+            
+              <RiTempColdFill
+              className='small-icons'
+           // add custom class name
+        />
+              <h4>Min Temp</h4>
+          </div>
+          <div className="sea-level">
+              <h2>{weatherData.solarradiation[currentIndex]??`No Data found`}</h2>
+            
+              <FontAwesomeIcon
+              icon={faRadiation}
+              className='small-icons'
+           // add custom class name
+        />
+              <h4>Solar radiation</h4>
+          </div>
+          <div className="sea-level">
+              <h2>{weatherData.snow[currentIndex]??`No Data found`}</h2>
+            
+              <FontAwesomeIcon
+              icon={faSnowflake}
+              className='small-icons'
+           // add custom class name
+        />
+              <h4>Snow</h4>
+          </div>
+          <div className="sea-level">
+          <h2>{weatherData.dew[currentIndex]??`No Data found`}</h2>
+            
+              <RiDropLine
+              className='small-icons'
+           // add custom class name
+        />
+              <h4>Dew</h4>
+          </div>
+
+          <div className="sea-level">
+              <h2>{weatherData.solarenergy[currentIndex]??`No Data found`}</h2>
+            
+              <FontAwesomeIcon
+              icon={faSun}
+              className='small-icons'
+           // add custom class name
+        />
+              <h4>Solar energy</h4>
+          </div>
+          <div className="sea-level">
+              <h2>{weatherData.moonphase[currentIndex]??`No Data found`}</h2>
+            
+              <FontAwesomeIcon
+              icon={faMoon}
+              className='small-icons'
+           // add custom class name
+        />
+              <h4>Moon Phase</h4>
+          </div>
+          </Carousel>
         </div>
-      </div>
+    
     </div>
   )
 }

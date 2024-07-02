@@ -23,6 +23,7 @@ function App() {
 
   const [city, setCity] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(null);
 
   const [latLong, setLatLong] = useState({
     latitude: "",
@@ -71,6 +72,7 @@ function App() {
         url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location.lat},${location.lng}?unitGroup=us&key=${API_KEY2}`;
             
          console.log(url)
+         
   
       } else  {
         console.log("using user city name")
@@ -78,13 +80,14 @@ function App() {
         setLatLong({})
        
       }
-
+      
       const response = await axios.get(url);
       setWeather(response);
     } catch (error) {
       setError("Error fetching the weather data");
       setWeather(null);
     }
+    setCurrentIndex(prvValue => 0)
   };
   const handleWeather = (e) => {
     e.preventDefault();
@@ -157,7 +160,9 @@ function App() {
     { name: formatDate (weather?.data?.days[6]?.datetime), uv: weather?.data?.days[6]?.uvindex, tempmax: weather?.data?.days[6]?.tempmax, hum: weather?.data?.days[6]?.humidity },
   ];
 
-
+ const handleCurrentIndex =(index)=>{
+  setCurrentIndex(prvValue => index)
+ }
  
 
   return ( <>
@@ -172,7 +177,7 @@ function App() {
         <button  disabled={city ===""} onClick={(e) => handleWeather(e)}>Get Weather Data</button>
       </form>
 
-     {hadWeatherData ? <CityWeather weather={weather} /> : handleError()}
+     {hadWeatherData ? <CityWeather setIndex={handleCurrentIndex} currentIndex={currentIndex} weather={weather} /> : handleError()}
 
      {hadWeatherData ? <LineChartComponent datas={datas} /> : handleError()}
 

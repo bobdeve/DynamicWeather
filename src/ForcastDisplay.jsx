@@ -14,8 +14,8 @@ import {
   
 } from "@fortawesome/free-solid-svg-icons";
 import { RiTempHotFill,RiBlazeFill,RiWaterPercentFill } from '@remixicon/react'
-export const ForcastDisplay = ({ weatherData }) => {
-  console.log(weatherData);
+export const ForcastDisplay = ({ weatherData,setIndex,currentIndex }) => {
+  
 
   const responsive = {
     superLargeDesktop: {
@@ -55,8 +55,13 @@ export const ForcastDisplay = ({ weatherData }) => {
     if (weatherData?.weatherInfo[index] === "Overcast" || weatherData?.weatherInfo[index]  === "Partially cloudy"){
       icons = faCloud;
     }
+    let mainClass = "forcast-items";
+    if (currentIndex === index){
+      mainClass += " selected"
+    }
+    console.log(mainClass)
     return (
-      <div className="forcast-items" key={index}>
+      <div className={mainClass} key={index} onClick={()=>setIndex(index)}>
         <div className="for-dispaly">
         <FontAwesomeIcon className="display-main-icon" icon={icons} />
         <div className="display-forc-info">
