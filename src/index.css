@@ -162,6 +162,7 @@ button {
   background-color: #fff;
   display: flex;
   gap: 1rem;
+  cursor: pointer;
 }
 .forcast-items{
   
@@ -335,6 +336,9 @@ button {
   .small-icons {
       width: 2.5rem;
       height: 2.5rem;
+  }
+  .title{
+    font-size: 2rem;
   }
 }
 
