@@ -110,7 +110,7 @@ export const CurrentDisplay = ({weatherData,mainClass,weatherClass,icon,currentI
               <h4>pressure</h4>
           </div>
           <div className="sea-level">
-             <div className="temp-text-min"> <h2>{(weatherData.tempmin[currentIndex]-30)/2??`No Data found`}</h2>
+             <div className="temp-text-min"> <h2>{((weatherData.tempmin[currentIndex]-30)/2).toFixed(2)??`No Data found`}</h2>
               <sup style={{ fontSize: "smaller" }}>C</sup></div>
             
               <RiTempColdFill

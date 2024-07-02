@@ -261,9 +261,9 @@ button {
   justify-content: center;
 }
 .weather-disc,.wind-speed,.humidity,.sea-level{
-  border: #273362 2px solid;
-  background-color: #5668AF;
-  color: black;
+  border: #273362 4px solid;
+ 
+  
 }
 
 /* Media Queries for Responsive Design */
