@@ -66,7 +66,7 @@ export const MyContextProvider = ({ children }) => {
     getWeather();
     setCity('');
   };
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
   const handleError = () => {
     if (loading) {
       return (

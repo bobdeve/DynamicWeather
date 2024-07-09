@@ -36,7 +36,7 @@ function App() {
         </button>
       </form>
 
-      {!loading ? (
+      {!loading && weather ? (
         <>
           <CityWeather  />
           <LineChartComponent datas={datas} />
